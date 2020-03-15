@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Col } from '@bootstrap-styled/v4';
 import {
     RestaurantsListingSection, RestaurantsListingContainer,
@@ -58,17 +58,9 @@ export function RestaurantListingContainerComponent(props: { isLoading: boolean,
     return restaurantsList();
 }
 
-export const RestaurantListingSectionComponent = (props: { page: number, children: any }) => {
-    let listSectionRef: any = React.createRef();
-
-    useEffect(() => {
-        if (props.page === 1) {
-            listSectionRef.current.scrollTop = 0;
-        }
-    }, [props.page, listSectionRef]);
-
+export const RestaurantListingSectionComponent = (props: { children: any }) => {
     return (
-        <RestaurantsListingSection ref={listSectionRef}>
+        <RestaurantsListingSection>
             {props.children}
         </RestaurantsListingSection>
     );

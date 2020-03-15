@@ -5,9 +5,8 @@ export const RestaurantsListingSection = styled.section`
     position: relative;
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 93px);
-    overflow: auto;
     padding: 20px 0px;
+    transform: translateY(60px);
 `;
 
 export const RestaurantsListingLoading = styled.div`
@@ -28,11 +27,7 @@ export const RestaurantsListingLoading = styled.div`
 `;
 
 export const RestaurantsNotFound = styled.div`
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     align-items: center;

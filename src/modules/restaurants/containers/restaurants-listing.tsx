@@ -80,6 +80,10 @@ class RestuarantsLoadMore extends React.PureComponent<{}, { isLoading: boolean, 
             handleLoadMore={this.handleLoadMoreThrottled}
         />
     }
+
+    componentWillUnmount() {
+        this.handleLoadMoreThrottled.cancel();
+    }
 }
 
 
@@ -112,25 +116,12 @@ class RestuarantsListingContainer extends React.PureComponent<{}, { restaurants:
     }
 }
 
-class RestuarantsListing extends React.PureComponent<{}, { page: number }> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            page: 1
-        };
-    }
-
-    public componentDidMount() {
-        restaurantsQuery.filters$
-            .pipe(untilDestroyed(this), distinctUntilChanged(), map((filters) => filters.page || 1))
-            .subscribe(page => this.setState({ page }));
-    }
-
+class RestuarantsListing extends React.PureComponent<{}, {}> {
     public render() {
         return (
             <React.Fragment>
                 <RestuarantsLoading></RestuarantsLoading>
-                <RestaurantListingSectionComponent page={this.state.page}>
+                <RestaurantListingSectionComponent>
                     <RestuarantsListingContainer></RestuarantsListingContainer>
                     <RestuarantsLoadMore></RestuarantsLoadMore>
                 </RestaurantListingSectionComponent>
