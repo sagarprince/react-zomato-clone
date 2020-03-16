@@ -6,7 +6,7 @@ import {
 } from './styled';
 import errorIcon from '../../../../assets/images/error.png';
 import { Restaurant } from '../../../../store/restaurants';
-import { RestaurantCardComponent } from '../restaurant-card';
+import RestaurantCardComponent from '../RestaurantCard';
 
 export function RestaurantsLoadingComponent(props: { isLoading: boolean, page?: number }) {
     if (props.isLoading && props.page === 1) {
@@ -32,7 +32,7 @@ export function RestaurantsLoadMoreComponent(props: { isLoading: boolean, hasLoa
     return <React.Fragment />
 }
 
-export function RestaurantListingContainerComponent(props: { isLoading: boolean, restaurants: Restaurant[] }) {
+function RestaurantListingContainerComponent(props: { isLoading: boolean, restaurants: Restaurant[] }) {
     const notFoundMessage: any = () => (
         <RestaurantsNotFound>
             <img src={errorIcon} alt="No Restaurants Found" />
@@ -57,6 +57,8 @@ export function RestaurantListingContainerComponent(props: { isLoading: boolean,
     }
     return restaurantsList();
 }
+
+export const MRestaurantListingContainerComponent = React.memo(RestaurantListingContainerComponent);
 
 export const RestaurantListingSectionComponent = (props: { children: any }) => {
     return (

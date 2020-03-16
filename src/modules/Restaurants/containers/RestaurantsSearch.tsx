@@ -1,7 +1,7 @@
 import React from 'react';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { untilDestroyed } from '../../../utils/take-until';
-import { RestaurantsSearchComponent } from '../components/restaurants-search';
+import { RestaurantsSearchComponent } from '../components/RestaurantsSearch';
 import { restaurantsService, restaurantsQuery } from '../../../store/restaurants';
 
 class RestuarantsSearch extends React.PureComponent<{}, {}> {

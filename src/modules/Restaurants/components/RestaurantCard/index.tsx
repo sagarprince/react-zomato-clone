@@ -12,7 +12,7 @@ interface Props {
     restaurant: Restaurant
 }
 
-export class RestaurantCardComponent extends React.PureComponent<Props, {}> {
+class RestaurantCardComponent extends React.PureComponent<Props, {}> {
 
     private renderRestaurantThumbnail() {
         const r = this.props.restaurant;
@@ -27,7 +27,7 @@ export class RestaurantCardComponent extends React.PureComponent<Props, {}> {
         const r = this.props.restaurant;
         return (
             <RestaurantCardSection>
-                <RestaurantThumbLink href={r.url}>
+                <RestaurantThumbLink to={`details/${r.id}`}>
                     {this.renderRestaurantThumbnail()}
                     <RestaurantThumbImgOverlay />
                     <RestaurantRatings color={r.user_rating.rating_color}>
@@ -35,7 +35,7 @@ export class RestaurantCardComponent extends React.PureComponent<Props, {}> {
                     </RestaurantRatings>
                 </RestaurantThumbLink>
                 <RestaurantDetails>
-                    <RestaurantTitle href={r.url} title={r.name}>{r.name}</RestaurantTitle>
+                    <RestaurantTitle to={`details/${r.id}`} title={r.name}>{r.name}</RestaurantTitle>
                     <RestaurantLocation title={r.location.locality_verbose}>{r.location.locality_verbose}</RestaurantLocation>
                     <RestaurantCuisine title={r.cuisines}>{r.cuisines}</RestaurantCuisine>
                 </RestaurantDetails>
@@ -43,3 +43,5 @@ export class RestaurantCardComponent extends React.PureComponent<Props, {}> {
         );
     }
 }
+
+export default React.memo(RestaurantCardComponent);

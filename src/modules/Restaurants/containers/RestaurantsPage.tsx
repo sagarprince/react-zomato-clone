@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import RestuarantsSearch from './restaurants-search';
-import RestuarantsListing from './restaurants-listing';
+import RestuarantsSearch from './RestaurantsSearch';
+import RestuarantsListing from './RestaurantsListing';
 
 const RestuarantsPageSection = styled.section``;
 

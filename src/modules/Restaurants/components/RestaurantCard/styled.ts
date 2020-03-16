@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 export const RestaurantCardSection = styled.section`
     display: flex;
@@ -7,7 +8,7 @@ export const RestaurantCardSection = styled.section`
     margin-bottom: 15px;
 `;
 
-export const RestaurantThumbLink = styled.a`
+export const RestaurantThumbLink = styled(Link)`
     white-space: nowrap;
     display: block;
     position: relative;
@@ -62,7 +63,7 @@ export const RestaurantDetails = styled.div`
     white-space: nowrap;
 `;
 
-export const RestaurantTitle = styled.a`
+export const RestaurantTitle = styled(Link)`
     white-space: nowrap;
     display: block;
     font-size: 1.4rem;

@@ -1,1 +1,1 @@
-export * from './containers/restaurants-page';
+export * from './containers/RestaurantsPage';

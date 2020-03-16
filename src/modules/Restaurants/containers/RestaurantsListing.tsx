@@ -5,8 +5,8 @@ import { throttle } from 'lodash';
 import { Restaurant, restaurantsService, restaurantsQuery } from '../../../store/restaurants';
 import {
     RestaurantsLoadingComponent, RestaurantsLoadMoreComponent,
-    RestaurantListingContainerComponent, RestaurantListingSectionComponent
-} from '../components/restaurants-listing';
+    MRestaurantListingContainerComponent, RestaurantListingSectionComponent
+} from '../components/RestaurantsListing';
 
 class RestuarantsLoading extends React.PureComponent<{}, { isLoading: boolean, page: number }> {
     constructor(props: any) {
@@ -108,7 +108,7 @@ class RestuarantsListingContainer extends React.PureComponent<{}, { restaurants:
 
     public render() {
         return (
-            <RestaurantListingContainerComponent
+            <MRestaurantListingContainerComponent
                 restaurants={this.state.restaurants}
                 isLoading={this.state.isLoading}
             />
