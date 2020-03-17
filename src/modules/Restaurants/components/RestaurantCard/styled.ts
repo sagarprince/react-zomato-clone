@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+// import { Img } from 'the-platform';
 
 export const RestaurantCardSection = styled.section`
     display: flex;
@@ -27,6 +28,18 @@ export const RestaurantThumbImg = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
+    &.loaded {
+        opacity: 1;
+        animation: reveal 0.4s ease-out;
+    }
+    @keyframes reveal {
+        0% {
+            transform: scale(0);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
 `;
 
 export const RestaurantDefaultThumbImg = styled.img``;

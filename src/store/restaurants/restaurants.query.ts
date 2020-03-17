@@ -30,6 +30,10 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
   get query(): string {
     return this.getValue().filters.query || '';
   }
+
+  get entities(): any {
+    return this.getAll();
+  }
 }
 
 export const restaurantsQuery = new RestaurantsQuery(restaurantsStore);

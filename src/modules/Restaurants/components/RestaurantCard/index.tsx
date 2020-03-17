@@ -17,7 +17,9 @@ class RestaurantCardComponent extends React.PureComponent<Props, {}> {
     private renderRestaurantThumbnail() {
         const r = this.props.restaurant;
         if (r.thumb) {
-            return <RestaurantThumbImg src={r.thumb} alt={r.name} width="600" loading="lazy" />;
+            return (
+                <RestaurantThumbImg className="loaded" src={r.thumb} alt={r.name} width="600" loading="lazy" />
+            );
         } else {
             return <RestaurantDefaultThumbImg src={restaurantIcon} alt={r.name} loading="lazy" />;
         }

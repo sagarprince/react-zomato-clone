@@ -17,11 +17,12 @@ export class RestaurantsRestService {
             sort: 'cost',
             order: 'desc'
         };
-        const _params: any = {
+        const payload: any = {
             ...defaultParams,
             ...params
         };
-        const queryParams = Object.keys(_params).map(key => key + '=' + _params[key]).join('&');
+        const queryParams = Object.keys(payload).map(key => key + '=' + payload[key]).join('&');
+
         return new Promise((resolve, reject) => {
             this.http.get(`/search?${queryParams}`)
                 .then((response: any) => {

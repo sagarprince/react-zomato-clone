@@ -97,7 +97,9 @@ class RestuarantsListingContainer extends React.PureComponent<{}, { restaurants:
     }
 
     public componentDidMount() {
-        restaurantsService.getRestaurants();
+        if (restaurantsQuery.entities.length === 0) {
+            restaurantsService.getRestaurants();
+        }
         restaurantsQuery.entities$
             .pipe(untilDestroyed(this), distinctUntilChanged())
             .subscribe(restaurants => this.setState({ restaurants }));
