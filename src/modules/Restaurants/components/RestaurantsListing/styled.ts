@@ -18,12 +18,7 @@ export const RestaurantsListingLoading = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgba(0,0,0,0.35);
-    color: #fff;
     z-index: 99;
-    h3 {
-        margin: 0px;
-    }
 `;
 
 export const RestaurantsNotFound = styled.div`

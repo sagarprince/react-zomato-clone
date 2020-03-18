@@ -1,11 +1,9 @@
 import React from 'react';
 import { Restaurant } from '../../../../store/restaurants';
-import restaurantIcon from '../../../../assets/images/restaurant_icon.png';
+import { RestuarantThumb } from '../RestuarantThumb';
 import {
-    RestaurantCardSection, RestaurantThumbLink,
-    RestaurantThumbImg, RestaurantDefaultThumbImg, RestaurantDetails, RestaurantTitle,
-    RestaurantLocation, RestaurantCuisine,
-    RestaurantThumbImgOverlay, RestaurantRatings
+    RestaurantCardSection, RestaurantThumbLink, RestaurantDetails, RestaurantTitle,
+    RestaurantLocation, RestaurantCuisine, RestaurantRatings
 } from './styled';
 
 interface Props {
@@ -14,24 +12,12 @@ interface Props {
 
 class RestaurantCardComponent extends React.PureComponent<Props, {}> {
 
-    private renderRestaurantThumbnail() {
-        const r = this.props.restaurant;
-        if (r.thumb) {
-            return (
-                <RestaurantThumbImg className="loaded" src={r.thumb} alt={r.name} width="600" loading="lazy" />
-            );
-        } else {
-            return <RestaurantDefaultThumbImg src={restaurantIcon} alt={r.name} loading="lazy" />;
-        }
-    }
-
     public render() {
         const r = this.props.restaurant;
         return (
             <RestaurantCardSection>
                 <RestaurantThumbLink to={`details/${r.id}`}>
-                    {this.renderRestaurantThumbnail()}
-                    <RestaurantThumbImgOverlay />
+                    <RestuarantThumb restaurant={r} />
                     <RestaurantRatings color={r.user_rating.rating_color}>
                         {r.user_rating.aggregate_rating}
                     </RestaurantRatings>

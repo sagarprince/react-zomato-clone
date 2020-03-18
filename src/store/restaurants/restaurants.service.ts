@@ -1,15 +1,16 @@
 import { RestaurantsStore, restaurantsStore } from './restaurants.store';
 import { RestaurantsRestService, restaurantsRestService } from './restaurants.rest.service';
+import { getRestaurants } from '../../workers/worker.service';
 
 export class RestaurantsService {
     constructor(
-        private store: RestaurantsStore,
-        private restaurantsRestService: RestaurantsRestService
+        public store: RestaurantsStore,
+        public restaurantsRestService: RestaurantsRestService
     ) { }
 
     public fetchRestaurants(params: any = {}): void {
         this.store.setLoading(true);
-        this.restaurantsRestService.getRestaurants(params).then((data) => {
+        getRestaurants(params).then((data) => {
             this.store.update({ totalRecords: data.totalRecords });
             if (params && params.start > 0) {
                 this.store.add(data.restaurants);

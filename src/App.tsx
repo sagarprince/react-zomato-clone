@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-// import { RestuarantsPage } from './modules/restaurants';
-// import { RestaurantDetailsPage } from './modules/RestaurantDetails';
+import { PageLoader } from './shared/components/PageLoader';
 
 const NotFound = () => (<div>404</div>);
 
@@ -13,12 +12,10 @@ const RestaurantDetailsPage = React.lazy(() =>
   import('./modules/RestaurantDetails').then(({ RestaurantDetailsPage }) => ({ default: RestaurantDetailsPage }))
 );
 
-const Loading = () => (<h2>Loading....</h2>);
-
 class App extends React.PureComponent<{}, {}> {
     public render() {
         return (
-            <React.Suspense fallback={<Loading />}>
+            <React.Suspense fallback={<PageLoader />}>
                 <Router>
                     <Switch>
                         <Route exact path="/" component={RestuarantsPage} />

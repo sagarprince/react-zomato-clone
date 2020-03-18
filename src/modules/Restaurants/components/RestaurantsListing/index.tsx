@@ -7,12 +7,13 @@ import {
 import errorIcon from '../../../../assets/images/error.png';
 import { Restaurant } from '../../../../store/restaurants';
 import RestaurantCardComponent from '../RestaurantCard';
+import { Loader } from '../../../../shared/components/Loader';
 
 export function RestaurantsLoadingComponent(props: { isLoading: boolean, page?: number }) {
     if (props.isLoading && props.page === 1) {
         return (
             <RestaurantsListingLoading>
-                <h3>Loading Please Wait...</h3>
+                <Loader />
             </RestaurantsListingLoading>
         );
     }
