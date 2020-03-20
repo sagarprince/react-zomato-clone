@@ -1,4 +1,5 @@
 import { QueryEntity } from '@datorama/akita';
+import { isEqual } from 'lodash';
 import { Observable } from 'rxjs';
 import { map, distinctUntilChanged, tap, filter } from 'rxjs/operators';
 import { RestaurantsState, restaurantsStore, RestaurantsStore } from './restaurants.store';
@@ -31,7 +32,7 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
     }),
     filter(() => !this.isInitialState),
     distinctUntilChanged((prev, curr) => {
-      return prev.length === curr.length;
+      return isEqual(prev, curr);
     })
   );
 
@@ -46,7 +47,6 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
   public hasLoadMore(): Observable<boolean> {
     return this.select(['totalRecords', 'filters']).pipe(
       distinctUntilChanged(),
-      filter((data) => data.totalRecords > 0),
       map((data) => {
         // simulate total records
         return { ...data, totalRecords: data.totalRecords > 20 ? 80 : 20 };

@@ -2,7 +2,7 @@ import React from 'react';
 import { throttle } from 'lodash';
 import {
     restaurantsService,
-    useRestaurantsLoadingFacade, useRestaurantsFacade, 
+    useRestaurantsLoadingFacade, useRestaurantsFacade,
     useRestaurantsHasLoadMoreFacade, restaurantsQuery
 } from '../../../store/restaurants';
 import {
@@ -48,13 +48,13 @@ function RestaurantsLoadMore() {
 }
 
 function RestaurantsListingWrap() {
+    const [{ isLoading }] = useRestaurantsLoadingFacade();
     const [{ restaurants }] = useRestaurantsFacade();
-    const isLoading = restaurantsQuery.isLoading;
 
     return (
         <RestaurantListingWrapComponent
-            restaurants={restaurants || []}
             isLoading={isLoading}
+            restaurants={restaurants || []}
         />
     );
 }

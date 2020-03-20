@@ -1,4 +1,5 @@
 import React from 'react';
+import { isEqual } from 'lodash';
 import { Col } from '@bootstrap-styled/v4';
 import {
     RestaurantsListingSection, RestaurantsListingContainer,
@@ -57,22 +58,32 @@ const RestaurantsNotFoundMessage = React.memo((props: any) => {
     return <React.Fragment />
 });
 
-export const RestaurantListingWrapComponent = React.memo((props: { isLoading: boolean; restaurants: Restaurant[] }) => {
+const RestaurantsList = React.memo((props: { restaurants: Restaurant[] }) => {
+    return (
+        <React.Fragment>
+            {props.restaurants.map((r: Restaurant) => {
+                return <Col key={r.id} lg={3} md={4} sm={6} xs={12}>
+                    <RestaurantCardComponent key={r.id} restaurant={r}></RestaurantCardComponent>
+                </Col>
+            })}
+        </React.Fragment>
+    );
+}, (prevProps, nextProps) => {
+    return isEqual(prevProps.restaurants, nextProps.restaurants);
+});
+
+export const RestaurantListingWrapComponent = (props: { isLoading: boolean; restaurants: Restaurant[] }) => {
     return (
         <React.Fragment>
             <RestaurantsListingContainer>
                 <RestaurantsListingRow>
-                    {props.restaurants.map((r: Restaurant) => {
-                        return <Col key={r.id} lg={3} md={4} sm={6} xs={12}>
-                            <RestaurantCardComponent key={r.id} restaurant={r}></RestaurantCardComponent>
-                        </Col>
-                    })}
+                    <RestaurantsList restaurants={props.restaurants} />
                 </RestaurantsListingRow>
             </RestaurantsListingContainer>
             <RestaurantsNotFoundMessage restaurants={props.restaurants} isLoading={props.isLoading} />
         </React.Fragment>
     );
-});
+};
 
 export const RestaurantListingSectionComponent = (props: { children: any }) => {
     return (
