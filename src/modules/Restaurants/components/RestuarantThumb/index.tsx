@@ -21,7 +21,7 @@ const ImageResource = createResource(
             img.onerror = () => reject('Image not loaded...');
         }));
     })
-)
+);
 
 const RestaurantLazyThumb = (props: IProps) => {
     const { restaurant } = props;
@@ -42,12 +42,8 @@ const RestaurantFallbackThumb = (props: { name: string }) => {
 export const RestuarantThumb: React.FC<IProps> = (props: IProps) => {
     const { restaurant } = props;
 
-    const renderError = ({ name }: { error?: any, info?: any, name?: any }) => (
-        <RestaurantFallbackThumb name={name} />
-    );
-
     return (
-        <ErrorBoundry render={renderError.bind(null, { name: restaurant.name })}>
+        <ErrorBoundry fallback={<RestaurantFallbackThumb name={restaurant.name} />}>
             <React.Suspense fallback={<RestaurantFallbackThumb name={restaurant.name} />}>
                 {restaurant.thumb ?
                     <RestaurantLazyThumb restaurant={restaurant} /> :

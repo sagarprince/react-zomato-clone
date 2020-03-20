@@ -1,49 +1,50 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { RestaurantSearchSection, RestaurantSearchForm, RestaurantSearchInput } from './styled';
 
-interface Props {
+interface IProps {
     query: string;
     onSubmitSearch: Function
 }
 
-interface State {
-    query: string;
-}
+export function RestaurantsSearchComponent(props: IProps) {
+    const [query, setQuery] = useState(props.query);
+    const [submitted, setSubmitted] = useState(false);
+    const inputRef: any = useRef();
 
-export class RestaurantsSearchComponent extends React.PureComponent<Props, State> {
-    inputRef: any;
+    useEffect(() => {
+        const frame = requestAnimationFrame(() => {
+            const scrollingElement = document.scrollingElement || document.documentElement;
+            scrollingElement.scrollTop = 0;
+        });
 
-    constructor(props: Props) {
-        super(props);
-        this.state = {
-            query: props.query
-        }
-        this.inputRef = React.createRef();
-    }
+        return () => {
+            frame && cancelAnimationFrame(frame);
+        };
+    }, [submitted]);
 
-    private handleSubmit(event: any): void {
+    function handleSubmit(event: any) {
         event.preventDefault();
-        this.inputRef.current.blur();
-        if (this.props.onSubmitSearch) {
-            this.props.onSubmitSearch(this.state.query);
+        inputRef.current?.blur();
+        if (props.onSubmitSearch) {
+            setSubmitted(true);
+            props.onSubmitSearch(query);
+            setTimeout(() => setSubmitted(false), 500);
         }
     }
 
-    private handleChange(event: any): void {
-        this.setState({ query: event.target.value });
+    function handleChange(e: any) {
+        setQuery(e.target.value);
     }
 
-    public render() {
-        return (
-            <RestaurantSearchSection>
-                <RestaurantSearchForm onSubmit={this.handleSubmit.bind(this)}>
-                    <RestaurantSearchInput
-                        ref={this.inputRef}
-                        placeholder="Search..."
-                        value={this.state.query}
-                        onChange={this.handleChange.bind(this)}></RestaurantSearchInput>
-                </RestaurantSearchForm>
-            </RestaurantSearchSection>
-        );
-    }
+    return (
+        <RestaurantSearchSection>
+            <RestaurantSearchForm onSubmit={handleSubmit}>
+                <RestaurantSearchInput
+                    ref={inputRef}
+                    placeholder="Search..."
+                    value={query}
+                    onChange={handleChange}></RestaurantSearchInput>
+            </RestaurantSearchForm>
+        </RestaurantSearchSection>
+    );
 }

@@ -1,26 +1,30 @@
 import React from 'react';
 
 interface IProps {
-    render: Function;
+    fallback: any;
     children: any;
 }
 
 export default class ErrorBoundary extends React.Component<IProps, {}> {
     state = {
-        error: null,
-        info: null
+        hasError: null
     };
 
+    static getDerivedStateFromError(error: any) {
+        return { hasError: true };
+    }
+
     componentDidCatch(error: any, info: any) {
-        this.setState({
-            error,
-            info
-        });
+        console.log(error, info);
     }
 
     render() {
-        if (this.state.error) {
-            return this.props.render && this.props.render(this.state);
+        if (this.state.hasError) {
+            return (
+                <React.Fragment>
+                    {this.props.fallback}
+                </React.Fragment>
+            );
         }
 
         return this.props.children;

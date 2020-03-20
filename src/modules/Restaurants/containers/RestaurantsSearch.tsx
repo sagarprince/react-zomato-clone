@@ -1,29 +1,10 @@
 import React from 'react';
-import { distinctUntilChanged, map } from 'rxjs/operators';
-import { untilDestroyed } from '../../../utils/take-until';
 import { RestaurantsSearchComponent } from '../components/RestaurantsSearch';
 import { restaurantsService, restaurantsQuery } from '../../../store/restaurants';
 
-class RestuarantsSearch extends React.PureComponent<{}, {}> {
+function RestuarantsSearch() {
 
-    public componentDidMount() {
-        restaurantsQuery.filters$
-            .pipe(
-                untilDestroyed(this),
-                distinctUntilChanged(),
-                map((filters) => filters.page || 1)
-            )
-            .subscribe(page => {
-                if (page === 1) {
-                    requestAnimationFrame(() => {
-                        const scrollingElement = document.scrollingElement || document.documentElement;
-                        scrollingElement.scrollTop = 0;
-                    });
-                }
-            });
-    }
-
-    private handleSearchSubmit(query: any) {
+    const handleSearchSubmit = (query: string) => {
         restaurantsService.setFilters({
             query: query,
             page: 1
@@ -31,13 +12,11 @@ class RestuarantsSearch extends React.PureComponent<{}, {}> {
         restaurantsService.getRestaurants();
     }
 
-    public render() {
-        return (
-            <RestaurantsSearchComponent
+    return (
+        <RestaurantsSearchComponent
                 query={restaurantsQuery.query}
-                onSubmitSearch={this.handleSearchSubmit.bind(this)}></RestaurantsSearchComponent>
-        )
-    }
+                onSubmitSearch={handleSearchSubmit}></RestaurantsSearchComponent>
+    );
 }
 
 export default RestuarantsSearch;
