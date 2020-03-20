@@ -17,7 +17,7 @@ export function useRestaurantsLoadingFacade() {
         ];
 
         return () => { subscriptions.map(it => it.unsubscribe()) };
-    }, []);
+    }, [state.isLoading]);
 
     return [state];
 }
@@ -45,11 +45,13 @@ export function useRestaurantsHasLoadMoreFacade() {
 
     useEffect(() => {
         const subscriptions: Subscription[] = [
-            onEmit<boolean>(restaurantsQuery.hasLoadMore(), hasLoadMore => setState(state => ({ ...state, hasLoadMore }))),
+            onEmit<boolean>(restaurantsQuery.hasLoadMore(), (hasLoadMore) => {
+                setState(state => ({ ...state, hasLoadMore }));
+            }),
         ];
 
         return () => { subscriptions.map(it => it.unsubscribe()) };
-    }, []);
+    }, [state.hasLoadMore]);
 
     return [state];
 }

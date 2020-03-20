@@ -11,11 +11,10 @@ import {
 } from '../components/RestaurantsListing';
 
 
-function RestuarantsLoading() {
+function RestaurantsLoading() {
     const [{ isLoading }] = useRestaurantsLoadingFacade();
     const page = restaurantsQuery.page;
-    console.log('IS LOADING...', isLoading);
-    
+
     return (
         <RestaurantsLoadingComponent
             isLoading={isLoading}
@@ -24,12 +23,10 @@ function RestuarantsLoading() {
     );
 }
 
-function RestuarantsLoadMore() {
+function RestaurantsLoadMore() {
     const [{ isLoading }] = useRestaurantsLoadingFacade();
     const [{ hasLoadMore }] = useRestaurantsHasLoadMoreFacade();
     const page = restaurantsQuery.page;
-
-    // console.log('LOAD MORE...');
 
     const onLoadMore = () => {
         restaurantsService.setFilters({
@@ -50,11 +47,9 @@ function RestuarantsLoadMore() {
     );
 }
 
-function RestuarantsListingWrap() {
+function RestaurantsListingWrap() {
     const [{ restaurants }] = useRestaurantsFacade();
     const isLoading = restaurantsQuery.isLoading;
-
-    console.log('LISTING...', restaurants);
 
     return (
         <RestaurantListingWrapComponent
@@ -68,10 +63,10 @@ class RestuarantsListing extends React.PureComponent<{}, {}> {
     public render() {
         return (
             <React.Fragment>
-                <RestuarantsLoading></RestuarantsLoading>
+                <RestaurantsLoading></RestaurantsLoading>
                 <RestaurantListingSectionComponent>
-                    <RestuarantsListingWrap></RestuarantsListingWrap>
-                    <RestuarantsLoadMore></RestuarantsLoadMore>
+                    <RestaurantsListingWrap></RestaurantsListingWrap>
+                    <RestaurantsLoadMore></RestaurantsLoadMore>
                 </RestaurantListingSectionComponent>
             </React.Fragment>
         );

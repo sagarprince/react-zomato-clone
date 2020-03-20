@@ -26,7 +26,7 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
   );
 
   public entities$ = this.selectAll().pipe(
-    tap((x) => {
+    tap(() => {
       this.setInitialState();
     }),
     filter(() => !this.isInitialState),
@@ -36,7 +36,7 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
   );
 
   public filters$ = this.select('filters').pipe(
-    tap((x) => {
+    tap(() => {
       this.setInitialState();
     }),
     filter(() => !this.isInitialState),
@@ -46,10 +46,14 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
   public hasLoadMore(): Observable<boolean> {
     return this.select(['totalRecords', 'filters']).pipe(
       distinctUntilChanged(),
+      filter((data) => data.totalRecords > 0),
+      map((data) => {
+        // simulate total records
+        return { ...data, totalRecords: data.totalRecords > 20 ? 80 : 20 };
+      }),
       map((data) => {
         const page = data.filters.page || 1;
-        // const total = Math.ceil(totalRecords / 20);
-        const total = data.totalRecords > 20 ? 4 : 1;
+        const total = Math.ceil(data.totalRecords / 20);
         return !(page >= total);
       })
     );

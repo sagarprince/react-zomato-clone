@@ -6,42 +6,44 @@ import {
 } from './styled';
 import errorIcon from '../../../../assets/images/error.png';
 import { Restaurant } from '../../../../store/restaurants';
-import RestaurantCardComponent from '../RestaurantCard';
 import { Loader } from '../../../../shared/components/Loader';
+import RestaurantCardComponent from '../RestaurantCard';
 
-export const RestaurantsLoadingComponent = React.memo(
-    function RestaurantsLoadingComponent(props: { isLoading: boolean; page?: number }) {
-        if (props.isLoading && props.page === 1) {
-            return (
-                <RestaurantsListingLoading>
-                    <Loader />
-                </RestaurantsListingLoading>
-            );
-        }
-        return <React.Fragment />
-    }
-)
-
-export function RestaurantsLoadMoreComponent(props: { isLoading: boolean; hasLoadMore: boolean; page: number; handleLoadMore: Function }) {
-    if (props.hasLoadMore) {
+export const RestaurantsLoadingComponent = React.memo((props: { isLoading: boolean; page?: number }) => {
+    if (props.isLoading && props.page === 1) {
         return (
-            <RestaurantsListingLoadMore>
-                <button type="button" onClick={() => props.handleLoadMore()}>
-                    {props.isLoading ? 'Please wait...' : 'Load More'}
-                </button>
-            </RestaurantsListingLoadMore>
+            <RestaurantsListingLoading>
+                <Loader />
+            </RestaurantsListingLoading>
         );
+    }
+    return <React.Fragment />
+}, (prevProps, nextProps) => prevProps.isLoading === nextProps.isLoading);
+
+const RestaurantsLoadMoreButton = React.memo((props: { isLoading: boolean; handleLoadMore?: Function }) => {
+    return (
+        <RestaurantsListingLoadMore>
+            <button type="button" onClick={() => props.handleLoadMore && props.handleLoadMore()}>
+                {props.isLoading ? 'Please wait...' : 'Load More'}
+            </button>
+        </RestaurantsListingLoadMore>
+    );
+}, (prevProps, nextProps) => {
+    return prevProps.isLoading === nextProps.isLoading;
+});
+
+export const RestaurantsLoadMoreComponent = React.memo((props: { isLoading: boolean; hasLoadMore: boolean; page: number; handleLoadMore: Function }) => {
+    if (props.hasLoadMore) {
+        return <RestaurantsLoadMoreButton isLoading={props.isLoading} handleLoadMore={props.handleLoadMore} />
     } else {
         if (props.page > 1 && props.isLoading) {
-            return (
-                <RestaurantsListingLoadMore>
-                    <button type="button">Please wait...</button>
-                </RestaurantsListingLoadMore>
-            );
+            return <RestaurantsLoadMoreButton isLoading={props.isLoading} />
         }
         return <React.Fragment />
     }
-}
+}, (prevProps, nextProps) => {
+    return prevProps.isLoading === nextProps.isLoading && prevProps.hasLoadMore === nextProps.hasLoadMore;
+});
 
 const RestaurantsNotFoundMessage = React.memo((props: any) => {
     if (props.restaurants.length === 0 && !props.isLoading) {
@@ -55,7 +57,7 @@ const RestaurantsNotFoundMessage = React.memo((props: any) => {
     return <React.Fragment />
 });
 
-export const RestaurantListingWrapComponent = React.memo(function RestaurantListingWrapComponent(props: { isLoading: boolean; restaurants: Restaurant[] }) {
+export const RestaurantListingWrapComponent = React.memo((props: { isLoading: boolean; restaurants: Restaurant[] }) => {
     return (
         <React.Fragment>
             <RestaurantsListingContainer>
