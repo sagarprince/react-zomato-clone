@@ -11,7 +11,7 @@ interface Props {
 }
 
 class RestaurantCardComponent extends React.PureComponent<Props, {}> {
-
+    
     public render() {
         const r = this.props.restaurant;
         return (

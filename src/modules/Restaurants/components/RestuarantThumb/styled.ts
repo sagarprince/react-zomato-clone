@@ -1,12 +1,21 @@
 import styled from 'styled-components';
 
+export const RestaurantLazyThumbWrap = styled.div`
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+
 export const RestaurantThumbImg = styled.img`
     width: 100%;
     height: 100%;
     object-fit: cover;
     &.loaded {
         opacity: 1;
-        animation: reveal 0.4s ease-out;
+        animation: reveal 0.6s cubic-bezier(0.79, -0.08, 0.18, 1.35);
     }
     @keyframes reveal {
         0% {
