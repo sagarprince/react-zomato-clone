@@ -1,16 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { akitaDevtools } from '@datorama/akita';
+import { akitaDevtools, persistState } from '@datorama/akita';
 import BootstrapProvider from '@bootstrap-styled/provider';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 import App from './App';
 
+declare let document: any;
+
 akitaDevtools();
 
-// persistState({
-//     include: []
-// });
+persistState({
+    include: ['restaurants'],
+    preStorageUpdate: (storeName: string, state: any) => {
+        if (storeName === 'restaurants') {
+            const { isLoading, ...rest } = state;
+            return { ...rest };
+        }
+        return state;
+    }
+});
 
 ReactDOM.render(
     <BootstrapProvider theme={{ '$font-family-sans-serif': '"Fira Sans Condensed", sans-serif' }}>

@@ -20,6 +20,7 @@ export class RestaurantsService {
             this.store.setLoading(false);
         }).catch(() => {
             this.store.setLoading(false);
+            this.store.update({ isInitialLoading: false });
         });
     }
 

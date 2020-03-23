@@ -2,6 +2,7 @@ import { Restaurant } from './restaurants.model';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
 
 export interface RestaurantsState extends EntityState<Restaurant> {
+  isInitialLoading: boolean;
   filters: {
     query?: string;
     page?: number;
@@ -11,6 +12,7 @@ export interface RestaurantsState extends EntityState<Restaurant> {
 }
 
 const initialState: RestaurantsState = {
+  isInitialLoading: true,
   filters: {
     query: '',
     page: 1,

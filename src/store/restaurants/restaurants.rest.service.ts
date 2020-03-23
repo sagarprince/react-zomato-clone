@@ -27,7 +27,11 @@ export class RestaurantsRestService {
             this.http.get(`/search?${queryParams}`)
                 .then((response: any) => {
                     const totalRecords = response && response.data ? response.data.results_found : 0;
-                    const restaurants = response && response.data ? response.data.restaurants.map((x: any) => x.restaurant) : [];
+                    const restaurants = response && response.data ? response.data.restaurants.map((x: any) => {
+                        const restaurant = x.restaurant;
+                        const photos = restaurant.photos ? restaurant.photos.map((p: any) => p.photo) : [];
+                        return { ...restaurant, photos };
+                    }) : [];
                     resolve({
                         totalRecords: totalRecords,
                         restaurants: restaurants

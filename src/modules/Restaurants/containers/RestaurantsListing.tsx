@@ -12,19 +12,18 @@ import {
 
 
 function RestaurantsLoading() {
-    const [{ isLoading }] = useRestaurantsLoadingFacade();
+    const [{ isLoading, isInitalLoading }] = useRestaurantsLoadingFacade();
     const page = restaurantsQuery.page;
-
     return (
         <RestaurantsLoadingComponent
-            isLoading={isLoading}
-            page={(page - 1)}
+            isLoading={isInitalLoading ? isInitalLoading : isLoading}
+            page={isInitalLoading ? 1 : (page - 1)}
         />
     );
 }
 
 function RestaurantsLoadMore() {
-    const [{ isLoading }] = useRestaurantsLoadingFacade();
+    const [{ isLoading, isInitalLoading }] = useRestaurantsLoadingFacade();
     const [{ hasLoadMore }] = useRestaurantsHasLoadMoreFacade();
     const page = restaurantsQuery.page;
 
@@ -39,9 +38,9 @@ function RestaurantsLoadMore() {
 
     return (
         <RestaurantsLoadMoreComponent
-            isLoading={isLoading}
+            isLoading={isInitalLoading || isLoading}
             hasLoadMore={hasLoadMore}
-            page={(page - 1)}
+            page={isInitalLoading ? 1 : (page - 1)}
             handleLoadMore={handleLoadMoreThrottled}
         />
     );

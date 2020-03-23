@@ -9,11 +9,12 @@ function onEmit<T>(source$: Observable<T>, nextFn: (value: T) => void): Subscrip
 }
 
 export function useRestaurantsLoadingFacade() {
-    const [state, setState] = useState({ isLoading: true } as { isLoading: boolean });
+    const [state, setState] = useState({ isLoading: true, isInitalLoading: true } as { isLoading: boolean, isInitalLoading: boolean });
 
     useEffect(() => {
         const subscriptions: Subscription[] = [
             onEmit<boolean>(restaurantsQuery.isLoading$, isLoading => setState(state => ({ ...state, isLoading }))),
+            onEmit<boolean>(restaurantsQuery.isInitialLoading$, isInitalLoading => setState(state => ({ ...state, isInitalLoading }))),
         ];
 
         return () => { subscriptions.map(it => it.unsubscribe()) };
@@ -54,4 +55,18 @@ export function useRestaurantsHasLoadMoreFacade() {
     }, [state.hasLoadMore]);
 
     return [state];
+}
+
+export function useRestaurantDetailsFacade(id: any): Restaurant {
+    const [state, setState] = useState({} as Restaurant);
+
+    useEffect(() => {
+        const subscriptions: Subscription[] = [
+            onEmit<any>(restaurantsQuery.getRestaurantDetails(id), (details) => details && Object.keys(details).length > 1 && setState(details)),
+        ];
+
+        return () => { subscriptions.map(it => it.unsubscribe()) };
+    }, [id]);
+
+    return state;
 }

@@ -1,3 +1,23 @@
+export interface Location { 
+    address: string;
+    locality: string;
+    city: string;
+    latitude: string;
+    longitude: string;
+    locality_verbose: string;
+}
+
+export interface Rating {
+    aggregate_rating: string;
+    rating_text: string;
+    rating_color: string;
+}
+
+export interface Photo {
+    id: any;
+    url: any;
+    thumb_url: any;
+}
 
 export interface Restaurant {
     id: number;
@@ -5,18 +25,9 @@ export interface Restaurant {
     url: string;
     thumb: string;
     cuisines: string;
-    location: { 
-        address: string;
-        locality: string;
-        city: string;
-        latitude: string;
-        longitude: string;
-        locality_verbose: string;
-    }
-    user_rating: {
-        aggregate_rating: string;
-        rating_text: string;
-        rating_color: string;
-    }
+    location: Location;
+    user_rating: Rating;
+    all_reviews_count: number;
+    photos: Photo[];
 }
 

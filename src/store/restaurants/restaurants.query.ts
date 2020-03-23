@@ -18,6 +18,14 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
     }
   }
 
+  public isInitialLoading$ = this.select('isInitialLoading').pipe(
+    tap(() => {
+      this.setInitialState();
+    }),
+    filter(() => !this.isInitialState),
+    distinctUntilChanged()
+  );
+
   public isLoading$ = this.selectLoading().pipe(
     tap(() => {
       this.setInitialState();
@@ -33,6 +41,10 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
     filter(() => !this.isInitialState),
     distinctUntilChanged((prev, curr) => {
       return isEqual(prev, curr);
+    }),
+    map((entities) => {
+      this.store.getValue().isInitialLoading && this.store.update({ isInitialLoading: false });
+      return entities;
     })
   );
 
@@ -58,6 +70,8 @@ export class RestaurantsQuery extends QueryEntity<RestaurantsState, Restaurant> 
       })
     );
   }
+
+  public getRestaurantDetails = (id: any) => this.selectEntity(id);
 
   get isLoading(): boolean {
     return this.getValue().loading || true;
