@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { RestaurantSearchSection, RestaurantSearchForm, RestaurantSearchInput } from './styled';
 
+declare let document: any;
+
 interface IProps {
     query: string;
     onSubmitSearch: Function
