@@ -7,7 +7,7 @@
     "@bootstrap-styled/v4": "^3.4.0",
     "@datorama/akita": "^4.21.0",
     "axios": "^0.19.2",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "^16.13.0",
     "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.13.0",
